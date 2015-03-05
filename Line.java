@@ -57,7 +57,10 @@ public class Line implements Comparable<Line>{
         // x = (b2 - b1) / (a1 - a2)
         double y = a * x + b;
 
-        if (x < this.p.x || x > this.q.x || x < other.p.x || x > other.q.x) {
+	// If x is behind the current sweep line location or is not actually
+	// on either segment, return null.
+        if (x < sweepLine || x < this.p.x || x > this.q.x || x < other.p.x 
+		|| x > other.q.x) {
             return null;
         } else return new Point(x, y, this);
 

@@ -24,9 +24,19 @@ public class LineSweep {
 	
 	Iterator<Point> magnum_PI = eventQueue.iterator();
 	while(magnum_PI.hasNext()) {
-	    System.out.println(magnum_PI.next());
-	    
-	    magnum_PI.remove();
+	    Point current = magnum_PI.next();
+	    Line.sweepLine = current.x;
+	    System.out.println(current);
+	    if(current.isLeft()) {
+	    	Line cline = current.line;
+		sweepStatus.add(cline);
+		eventQueue.remove(sweepStatus.higher(cline)
+			.intersect(sweepStatus.lower(cline)));
+		Point upperIntersect = cline.intersect(sweepStatus.higher(cline));
+		if(upperIntersect != null) eventQueue.add(upperIntersect);
+		Point lowerIntersect = cline.intersect(sweepStatus.lower(cline));
+		if(lowerIntersect != null) eventQueue.add(lowerIntersect);
+	    }
 	}
 
     }
@@ -52,9 +62,10 @@ public class LineSweep {
         TreeSet<Point> eventQueue = new TreeSet<Point>();
         TreeSet<Line> sweepStatus = new TreeSet<Line>();
         LinkedList<Point> intersects = new LinkedList<Point>();
+	LinkedList<Line> lines = new LinkedList<Line>();
 
         try {
-            LineScanner.read(args[0], eventQueue);
+            LineScanner.read(args[0], eventQueue, lines);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
             return;
