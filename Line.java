@@ -20,11 +20,11 @@ public class Line implements Comparable<Line>{
 		// y = m*x + (y1 - m*x1)
     }
 
-    public void setX(int x) {
+    public static void setX(int x) {
 		setX(1. * x);
     }
 
-    public void setX(double x) {
+    public static void setX(double x) {
 		sweepLine = x;
     }
 
