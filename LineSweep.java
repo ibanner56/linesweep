@@ -17,21 +17,24 @@ public class LineSweep {
      * Runs the sweep algorithm
      * @param eventQueue - The eventQueue (of points)
      * @param sweepStatus - The initial sweep status
-     * @param intersects - The linked list to put the intersect poitns into.
+     * @param intersects - The linked list to put the intersect points into.
      */
     public static void sweep(TreeSet<Point> eventQueue, 
     	TreeSet<Line> sweepStatus, LinkedList<Point> intersects) {
 	
-	Iterator<Point> magnum_PI = eventQueue.iterator();
-	while(magnum_PI.hasNext()) {
-	    Point current = magnum_PI.next();
+	while(eventQueue.size() > 0) {
+	    Point current = eventQueue.pollFirst();
+		
 	    Line.setX(current.x);
-	    System.out.println(current);
 	    if(current.isLeft()) {
 	    	Line cline = current.getLine();
 			sweepStatus.add(cline);
-			eventQueue.remove(sweepStatus.higher(cline)
-				.intersect(sweepStatus.lower(cline)));
+			Line higher = sweepStatus.higher(cline);
+			if(higher != null) {
+				Point hintersect = sweepStatus.higher(cline)
+									.intersect(sweepStatus.lower(cline));
+				if(hintersect != null) eventQueue.remove(hintersect);
+			}
 			Point upperIntersect = cline.intersect(sweepStatus.higher(cline));
 			if(upperIntersect != null) eventQueue.add(upperIntersect);
 			Point lowerIntersect = cline.intersect(sweepStatus.lower(cline));
@@ -41,10 +44,35 @@ public class LineSweep {
 			Line clineUpper = sweepStatus.higher(cline);
 			Line clineLower = sweepStatus.lower(cline);
 			sweepStatus.remove(cline);
-			Point intersect = clineUpper.intersect(clineLower);
-			if(intersect != null) eventQueue.add(intersect);
+			if(clineUpper != null) {
+				Point intersect = clineUpper.intersect(clineLower);
+				if(intersect != null) eventQueue.add(intersect);
+			}
 	    } else {
 			// It's an intersection event.
+			intersects.add(current);
+			sweepStatus.remove(current.getLine()); // Note, this only works
+			sweepStatus.add(current.getLine());    // to swap the lines because
+												   // my line comparator will
+												   // look ahead if they're 
+												   // equal at the current point
+			LinkedList<Line> clines = current.getLines();
+			if(sweepStatus.higher(clines.get(0)).equals(clines.get(1))) {
+				// clines[1] is above clines[0]
+				Point upperIntersect = clines.get(1)
+					.intersect(sweepStatus.higher(clines.get(1)));
+				if(upperIntersect != null) eventQueue.add(upperIntersect);
+				Point lowerIntersect = clines.get(0)
+					.intersect(sweepStatus.lower(clines.get(0)));
+				if(lowerIntersect != null) eventQueue.add(lowerIntersect);
+			} else {
+				Point upperIntersect = clines.get(0)
+					.intersect(sweepStatus.higher(clines.get(0)));
+				if(upperIntersect != null) eventQueue.add(upperIntersect);
+				Point lowerIntersect = clines.get(1)
+					.intersect(sweepStatus.lower(clines.get(1)));
+				if(lowerIntersect != null) eventQueue.add(lowerIntersect);
+			}		
 		}
 	}
 
@@ -71,7 +99,7 @@ public class LineSweep {
         TreeSet<Point> eventQueue = new TreeSet<Point>();
         TreeSet<Line> sweepStatus = new TreeSet<Line>();
         LinkedList<Point> intersects = new LinkedList<Point>();
-	LinkedList<Line> lines = new LinkedList<Line>();
+		LinkedList<Line> lines = new LinkedList<Line>();
 
         try {
             LineScanner.read(args[0], eventQueue, lines);
@@ -90,7 +118,7 @@ public class LineSweep {
 	System.out.println(sweepStatus.size());
 	R.drawLine(0, 250, 499, 250, T);
 	R.drawLine(250, 0, 250, 499, T);
-        for(Line line : sweepStatus) {
+        for(Line line : lines) {
             System.out.println(line);
             R.drawLine((250 + 15*line.p.x), (250 + 15*line.p.y), (250 + 15*line.q.x), (250 + 15*line.q.y), T );
         }
