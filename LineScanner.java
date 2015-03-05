@@ -37,8 +37,8 @@ public class LineScanner {
             Point q = new Point(Integer.parseInt(pointPair[2]),
                     Integer.parseInt(pointPair[3]));
             Line line = new Line(p, q);
-            p.setLine(line);
-            q.setLine(line);
+            p.addLine(line);
+            q.addLine(line);
 
             points.add(p);
             points.add(q);
