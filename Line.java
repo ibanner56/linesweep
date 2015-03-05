@@ -49,7 +49,7 @@ public class Line implements Comparable<Line>{
     }
 
     public Point intersect(Line other) {
-        if(this.a == other.a) return null;
+        if(other == null || this.a == other.a) return null;
 
         double x = (other.b - this.b) / (this.a - other.a);
         // a1*x + b1 = a2*x + b2
