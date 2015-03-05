@@ -66,7 +66,10 @@ public class Line implements Comparable<Line>{
         if (x < sweepLine || x < this.p.x || x > this.q.x || x < other.p.x 
 				|| x > other.q.x) {
             return null;
-        } else return new Point(x, y, this);
+        } else {
+			Point intersect = new Point(x, y, this);
+			intersect.addLine(other);
+		}
 
     }
 
