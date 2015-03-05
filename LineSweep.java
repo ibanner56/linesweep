@@ -25,25 +25,27 @@ public class LineSweep {
 	Iterator<Point> magnum_PI = eventQueue.iterator();
 	while(magnum_PI.hasNext()) {
 	    Point current = magnum_PI.next();
-	    Line.sweepLine = current.x;
+	    Line.setX(current.x);
 	    System.out.println(current);
 	    if(current.isLeft()) {
-	    	Line cline = current.line;
-		sweepStatus.add(cline);
-		eventQueue.remove(sweepStatus.higher(cline)
-			.intersect(sweepStatus.lower(cline)));
-		Point upperIntersect = cline.intersect(sweepStatus.higher(cline));
-		if(upperIntersect != null) eventQueue.add(upperIntersect);
-		Point lowerIntersect = cline.intersect(sweepStatus.lower(cline));
-		if(lowerIntersect != null) eventQueue.add(lowerIntersect);
+	    	Line cline = current.getLine();
+			sweepStatus.add(cline);
+			eventQueue.remove(sweepStatus.higher(cline)
+				.intersect(sweepStatus.lower(cline)));
+			Point upperIntersect = cline.intersect(sweepStatus.higher(cline));
+			if(upperIntersect != null) eventQueue.add(upperIntersect);
+			Point lowerIntersect = cline.intersect(sweepStatus.lower(cline));
+			if(lowerIntersect != null) eventQueue.add(lowerIntersect);
 	    } else if(current.isRight()) {
-		Line cline = current.line;
-		Line clineUpper = sweepStatus.higher(cline);
-		Line clineLower = sweepStatus.lower(cline);
-		sweepStatus.remove(cline);
-		Point intersect = clineUpper.intersect(clineLower);
-		if(intersect != null) eventQueue.add(intersect);
-	    }
+			Line cline = current.getLine();
+			Line clineUpper = sweepStatus.higher(cline);
+			Line clineLower = sweepStatus.lower(cline);
+			sweepStatus.remove(cline);
+			Point intersect = clineUpper.intersect(clineLower);
+			if(intersect != null) eventQueue.add(intersect);
+	    } else {
+			// It's an intersection event.
+		}
 	}
 
     }
@@ -86,8 +88,8 @@ public class LineSweep {
 
 	// Print out the lines and draw them.
 	System.out.println(sweepStatus.size());
-	R.drawLine(0, 250, 499, 250);
-	R.drawLine(250, 0, 250, 499);
+	R.drawLine(0, 250, 499, 250, T);
+	R.drawLine(250, 0, 250, 499, T);
         for(Line line : sweepStatus) {
             System.out.println(line);
             R.drawLine((250 + 15*line.p.x), (250 + 15*line.p.y), (250 + 15*line.q.x), (250 + 15*line.q.y), T );
