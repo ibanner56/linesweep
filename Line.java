@@ -69,6 +69,7 @@ public class Line implements Comparable<Line>{
         } else {
 			Point intersect = new Point(x, y, this);
 			intersect.addLine(other);
+			return intersect;
 		}
 
     }
