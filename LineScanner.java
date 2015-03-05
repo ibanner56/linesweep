@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.NoSuchElementException;
@@ -17,7 +18,7 @@ public class LineScanner {
      * @throws IOException
      * @throws NoSuchElementException
      */
-    public static void read (String filename, TreeSet<Point> points)
+    public static void read (String filename, TreeSet<Point> points, LinkedList<Line> lines)
             throws IOException, NoSuchElementException{
         
         File pointFile = new File(filename);
@@ -42,7 +43,8 @@ public class LineScanner {
 
             points.add(p);
             points.add(q);
-        }
+			lines.add(line);
+		}
     }
 
     /**
