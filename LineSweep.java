@@ -36,6 +36,13 @@ public class LineSweep {
 		if(upperIntersect != null) eventQueue.add(upperIntersect);
 		Point lowerIntersect = cline.intersect(sweepStatus.lower(cline));
 		if(lowerIntersect != null) eventQueue.add(lowerIntersect);
+	    } else if(current.isRight()) {
+		Line cline = current.line;
+		Line clineUpper = sweepStatus.higher(cline);
+		Line clineLower = sweepStatus.lower(cline);
+		sweepStatus.remove(cline);
+		Point intersect = clineUpper.intersect(clineLower);
+		if(intersect != null) eventQueue.add(intersect);
 	    }
 	}
 
