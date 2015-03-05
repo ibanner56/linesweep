@@ -15,8 +15,8 @@ public class lineTest {
     
 	static public void main(String[] args){
 		
-		simpleCanvas T = new simpleCanvas(300, 300);
-        Rasterizer R = new Rasterizer (300);
+		simpleCanvas T = new simpleCanvas(500, 500);
+        Rasterizer R = new Rasterizer (500);
         
         T.setColor (0.0f, 0.0f, 0.0f);
 		T.clear();

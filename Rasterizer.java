@@ -31,6 +31,10 @@ public class Rasterizer {
     {
         n_scanlines = n;
     }
+
+    public void drawLine(double x0, double y0, double x1, double y1, simpleCanvas C) {
+        drawLine((int) x0, (int) y0, (int) x1, (int) y1, C);
+    }
     
     /**
      * Draw a line from (x0,y0) to (x1, y1) on the simpleCanvas C.

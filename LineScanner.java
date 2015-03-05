@@ -17,8 +17,8 @@ public class LineScanner {
      * @throws IOException
      * @throws NoSuchElementException
      */
-    public static void read (String filename, TreeSet<Point> points, 
-    	TreeSet<Line> lines) throws IOException, NoSuchElementException{
+    public static void read (String filename, TreeSet<Point> points)
+            throws IOException, NoSuchElementException{
         
         File pointFile = new File(filename);
         Scanner s = new Scanner(new BufferedReader(new FileReader(pointFile)));
@@ -34,15 +34,14 @@ public class LineScanner {
 
             Point p = new Point(Integer.parseInt(pointPair[0]),
                         Integer.parseInt(pointPair[1]));
-	    Point q = new Point(Integer.parseInt(pointPair[2]),
-	    		Integer.parseInt(pointPair[3]));
-	    Line line = new Line(p, q);
-	    p.setLine(line);
-	    q.setLine(line);
+            Point q = new Point(Integer.parseInt(pointPair[2]),
+                    Integer.parseInt(pointPair[3]));
+            Line line = new Line(p, q);
+            p.setLine(line);
+            q.setLine(line);
 
-	    points.add(p);
-	    points.add(q);
-	    lines.add(line);
+            points.add(p);
+            points.add(q);
         }
     }
 

@@ -29,10 +29,14 @@ public class Point implements Comparable<Point>{
 	return this.x == other.x && this.y == other.y;
     }
 
+    public boolean isLeft() { return this.compareTo(line.q) < 0; }
+
     public int compareTo(Point other) {
-	if (this.x < other.x) return -1;
-	else if (this.x > other.x) return 1;
-	else return 0;
+        if (this.x < other.x) return -1;
+        else if (this.x > other.x) return 1;
+        else if(this.y < other.y) return -1;
+        else if(this.y > other.y) return 1;
+        else return 0;
     }
 
     public String toString() {
