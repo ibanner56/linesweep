@@ -1,4 +1,5 @@
 import java.util.TreeSet;
+import java.util.Iterator;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -20,6 +21,13 @@ public class LineSweep {
      */
     public static void sweep(TreeSet<Point> eventQueue, 
     	TreeSet<Line> sweepStatus, LinkedList<Point> intersects) {
+	
+	Iterator<Point> magnum_PI = eventQueue.iterator();
+	while(magnum_PI.hasNext()) {
+	    System.out.println(magnum_PI.next());
+	    
+	    magnum_PI.remove();
+	}
 
     }
 
@@ -46,7 +54,7 @@ public class LineSweep {
         LinkedList<Point> intersects = new LinkedList<Point>();
 
         try {
-            LineScanner.read(args[0], eventQueue, sweepStatus);
+            LineScanner.read(args[0], eventQueue);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
             return;
@@ -55,17 +63,23 @@ public class LineSweep {
             return;
         }
 
-        for(Point point : eventQueue) {
-            System.out.println(point);
-        }
 
-        R.drawLine(250, 0, 250, 499, T);
-        R.drawLine(0, 250, 499, 250, T);
-        System.out.println(sweepStatus.size());
+	sweep(eventQueue, sweepStatus, intersects);
+
+	// Print out the lines and draw them.
+	System.out.println(sweepStatus.size());
+	R.drawLine(0, 250, 499, 250);
+	R.drawLine(250, 0, 250, 499);
         for(Line line : sweepStatus) {
             System.out.println(line);
             R.drawLine((250 + 15*line.p.x), (250 + 15*line.p.y), (250 + 15*line.q.x), (250 + 15*line.q.y), T );
         }
+
+	System.out.println("\nNumber of intersections: " + intersects.size());
+	for(Point point : intersects) {
+	    System.out.println(point);
+	    // R.drawPoint(point.x, point.y);
+	}
 
         Frame f = new Frame( "line Test" );
         f.add("Center", T);

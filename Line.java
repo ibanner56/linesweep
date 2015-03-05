@@ -5,7 +5,7 @@
 
 public class Line implements Comparable<Line>{
 
-    private static double sweepLine = Int.
+    private static double sweepLine = Integer.MIN_VALUE;
 
     public final Point p, q;	// Where p is the left endpoint, q the right.
     public final double a, b;
@@ -20,14 +20,28 @@ public class Line implements Comparable<Line>{
 	// y = m*x + (y1 - m*x1)
     }
 
+    public void setX(int x) {
+	setX(1. * x);
+    }
+
+    public void setX(double x) {
+	sweepLine = x;
+    }
+
     public int compareTo(Line other) {
-        if(this.a + b < other.a + b) return -1;
-        else if(this.a + b > other.a + b) return 1;
-        else if(this.p.compareTo(other.p) < 0) return -1;
-        else if(this.p.compareTo(other.p) > 0) return 1;
-        else if(this.q.compareTo(other.q) < 0) return -1;
-        else if(this.q.compareTo(other.q) > 0) return 1;
-        else return 0;
+     	if(this.a == other.a && this.b == other.b && this.p == other.p 
+		&& this.q == other.q) return 0;
+	double y1 = this.a * sweepLine + this.b;
+	double y2 = other.a * sweepLine + other.b;
+	if(y1 < y2) return -1;
+	if(y1 > y2) return 1;
+	else {
+	    y1 = this.a * (sweepLine + 1) + this.b;
+	    y2 = other.a * (sweepLine + 1) + other.b;
+	    if(y1 < y2) return -1;
+	    else if(y1 > y2) return 1;
+	    else return 0;
+	}
     }
 
     public String toString() {
