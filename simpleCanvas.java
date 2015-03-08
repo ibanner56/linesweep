@@ -25,8 +25,8 @@ public class simpleCanvas extends Canvas {
 	
 	public BufferedImage I;
 	private int	clearC;
-	private int width;
-	private int height;
+	public final int width;
+	public final int height;
 	private Color curColor;
 
 	simpleCanvas (int w, int h) 
@@ -65,5 +65,5 @@ public class simpleCanvas extends Canvas {
 		// draw pixels
         g.drawImage(I, 0, 0, Color.red, null);
     }	
-
+	
 }

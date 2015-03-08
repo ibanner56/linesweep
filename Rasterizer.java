@@ -3,8 +3,7 @@
 //  
 //
 //  Created by Joe Geigel on 1/21/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+//  Raster algorithms implemented by Isaac Banner.
 
 /**
  * 
@@ -32,6 +31,18 @@ public class Rasterizer {
         n_scanlines = n;
     }
 
+	public void drawPoint(double x0, double y0, simpleCanvas C) {
+		drawPoint((int) x0, (int) y0, C);
+	}
+
+	public void drawPoint(int x0, int y0, simpleCanvas C) {
+		for(int i = x0 - 3; i < x0 + 3; i++) {
+			for(int j = y0 - 3; j < y0 + 3; j++) {
+				C.setPixel(i, j);
+			}
+		}
+	}
+
     public void drawLine(double x0, double y0, double x1, double y1, simpleCanvas C) {
         drawLine((int) x0, (int) y0, (int) x1, (int) y1, C);
     }
@@ -52,6 +63,14 @@ public class Rasterizer {
 	 */
 	public void drawLine (int x0, int y0, int x1, int y1, simpleCanvas C)
 	{
+		x0 = max(x0, 0);
+		x0 = min(x0, C.width - 1);
+		y0 = max(y0, 0);
+		y0 = min(y0, C.height - 1);
+		x1 = max(x1, 0);
+		x1 = min(x1, C.width - 1);
+		y1 = max(y1, 0);
+		y1 = min(y1, C.height - 1);
 		int temp;
     		if(x0 > x1){ 
 			//If x0 is greater than x1, we need to swap the

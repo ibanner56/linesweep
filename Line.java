@@ -63,7 +63,7 @@ public class Line implements Comparable<Line>{
 
 		// If x is behind the current sweep line location or is not actually
 		// on either segment, return null.
-        if (x < sweepLine || x < this.p.x || x > this.q.x || x < other.p.x 
+        if (x <= sweepLine || x < this.p.x || x > this.q.x || x < other.p.x 
 				|| x > other.q.x) {
             return null;
         } else {

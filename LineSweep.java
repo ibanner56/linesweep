@@ -24,7 +24,9 @@ public class LineSweep {
 	
 	while(eventQueue.size() > 0) {
 	    Point current = eventQueue.pollFirst();
-		
+
+		System.out.println("Current Point: " + current);		
+
 	    Line.setX(current.x);
 	    if(current.isLeft()) {
 	    	Line cline = current.getLine();
@@ -51,13 +53,16 @@ public class LineSweep {
 	    } else {
 			// It's an intersection event.
 			intersects.add(current);
-			sweepStatus.remove(current.getLine()); // Note, this only works
-			sweepStatus.add(current.getLine());    // to swap the lines because
-												   // my line comparator will
-												   // look ahead if they're 
-												   // equal at the current point
+			for(Line line : current.getLines()) {
+				sweepStatus.remove(line);	// Note, this only works
+				sweepStatus.add(line);		// to swap the lines because
+			}								// my line comparator will
+											// look ahead if they're 
+											// equal at the current point
+
 			LinkedList<Line> clines = current.getLines();
-			if(sweepStatus.higher(clines.get(0)).equals(clines.get(1))) {
+			Line higher = sweepStatus.higher(clines.get(0)); 
+			if(higher != null && higher.equals(clines.get(1))) {
 				// clines[1] is above clines[0]
 				Point upperIntersect = clines.get(1)
 					.intersect(sweepStatus.higher(clines.get(1)));
@@ -126,7 +131,7 @@ public class LineSweep {
 	System.out.println("\nNumber of intersections: " + intersects.size());
 	for(Point point : intersects) {
 	    System.out.println(point);
-	    // R.drawPoint(point.x, point.y);
+		R.drawPoint((250 + 15*point.x), (250 + 15*point.y), T);
 	}
 
         Frame f = new Frame( "line Test" );
