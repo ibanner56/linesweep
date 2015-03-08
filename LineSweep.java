@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.Math;
 
 /**
  * @author Isaac Banner - isb4190
@@ -60,24 +61,14 @@ public class LineSweep {
 											// look ahead if they're 
 											// equal at the current point
 
-			LinkedList<Line> clines = current.getLines();
-			Line higher = sweepStatus.higher(clines.get(0)); 
-			if(higher != null && higher.equals(clines.get(1))) {
-				// clines[1] is above clines[0]
-				Point upperIntersect = clines.get(1)
-					.intersect(sweepStatus.higher(clines.get(1)));
+			for(Line line : current.getLines()) {
+				Point upperIntersect = line
+					.intersect(sweepStatus.higher(line));
 				if(upperIntersect != null) eventQueue.add(upperIntersect);
-				Point lowerIntersect = clines.get(0)
-					.intersect(sweepStatus.lower(clines.get(0)));
-				if(lowerIntersect != null) eventQueue.add(lowerIntersect);
-			} else {
-				Point upperIntersect = clines.get(0)
-					.intersect(sweepStatus.higher(clines.get(0)));
-				if(upperIntersect != null) eventQueue.add(upperIntersect);
-				Point lowerIntersect = clines.get(1)
-					.intersect(sweepStatus.lower(clines.get(1)));
-				if(lowerIntersect != null) eventQueue.add(lowerIntersect);
-			}		
+				Point lowerIntersect = line
+					.intersect(sweepStatus.lower(line));
+				if(lowerIntersect != null) eventQueue.add(lowerIntersect);	
+			}
 		}
 	}
 
@@ -133,6 +124,8 @@ public class LineSweep {
 	    System.out.println(point);
 		R.drawPoint((250 + 15*point.x), (250 + 15*point.y), T);
 	}
+	
+	LineScanner.write(intersects, "intersections");	
 
         Frame f = new Frame( "line Test" );
         f.add("Center", T);
@@ -146,5 +139,6 @@ public class LineSweep {
             }
         });
     }
-
 }
+
+

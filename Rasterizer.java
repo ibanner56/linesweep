@@ -38,7 +38,8 @@ public class Rasterizer {
 	public void drawPoint(int x0, int y0, simpleCanvas C) {
 		for(int i = x0 - 3; i < x0 + 3; i++) {
 			for(int j = y0 - 3; j < y0 + 3; j++) {
-				C.setPixel(i, j);
+				if(i < C.width && i > 0 && j < C.height && j > 0) 
+					C.setPixel(i, j);
 			}
 		}
 	}
@@ -63,14 +64,14 @@ public class Rasterizer {
 	 */
 	public void drawLine (int x0, int y0, int x1, int y1, simpleCanvas C)
 	{
-		x0 = max(x0, 0);
-		x0 = min(x0, C.width - 1);
-		y0 = max(y0, 0);
-		y0 = min(y0, C.height - 1);
-		x1 = max(x1, 0);
-		x1 = min(x1, C.width - 1);
-		y1 = max(y1, 0);
-		y1 = min(y1, C.height - 1);
+		x0 = Math.max(x0, 0);
+		x0 = Math.min(x0, C.width - 1);
+		y0 = Math.max(y0, 0);
+		y0 = Math.min(y0, C.height - 1);
+		x1 = Math.max(x1, 0);
+		x1 = Math.min(x1, C.width - 1);
+		y1 = Math.max(y1, 0);
+		y1 = Math.min(y1, C.height - 1);
 		int temp;
     		if(x0 > x1){ 
 			//If x0 is greater than x1, we need to swap the

@@ -56,6 +56,10 @@ public class LineScanner {
         return write(intersects, "intersects");
     }
 
+	public static boolean write(LinkedList<Point> intersects, String filename) {
+		return write(new ArrayList<Point>(intersects), filename);
+	}
+
     /**
      * Writes the points to an output file
      * @param intersects - list of intersection points

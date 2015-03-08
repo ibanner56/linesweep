@@ -1,0 +1,3 @@
+To compile, simply run "javac *.java"
+Usage: java LineSweep <filename>
+Will output list of calculated intersection points to the file "intersects.out"
