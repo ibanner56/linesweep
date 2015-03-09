@@ -29,22 +29,19 @@ public class Line implements Comparable<Line>{
     }
 
 	public boolean equals(Line other) {
-	    return this.compareTo(other) == 0;
+	    return this.a == other.a && this.b == other.b &&
+	    	this.p.equals(other.p) && this.q.equals(other.q);
 	}
 
     public int compareTo(Line other) {
-     	if(this.a == other.a && this.b == other.b && this.p == other.p 
-		&& this.q == other.q) return 0;
+		if(equals(other)) return 0;
 		double y1 = this.a * sweepLine + this.b;
 		double y2 = other.a * sweepLine + other.b;
-		if(y1 < y2) return -1;
-		if(y1 > y2) return 1;
+		if(y1 != y1) return (int) Math.ceil(y1 - y2);
 		else {
 			y1 = this.a * (sweepLine + 1) + this.b;
 			y2 = other.a * (sweepLine + 1) + other.b;
-			if(y1 < y2) return -1;
-			else if(y1 > y2) return 1;
-			else return 0;
+			return (int) Math.ceil(y1 - y2);
 		}	
     }
 

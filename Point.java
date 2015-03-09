@@ -64,8 +64,7 @@ public class Point implements Comparable<Point>{
 	 * @param other - the other point.
 	 */ 
     public boolean equals(Point other) {
-		return this.x == other.x && this.y == other.y 
-		    && this.getLine().equals(other.getLine());
+		return this.x == other.x && this.y == other.y; 
     }
 
 	/**
@@ -87,7 +86,8 @@ public class Point implements Comparable<Point>{
 	 * @return whether this point is earlier or later in terms of x, then y
 	 */ 
     public int compareTo(Point other) {
-        if (this.x < other.x) return -1;
+        if (equals(other)) return 0;
+	else if (this.x < other.x) return -1;
         else if (this.x > other.x) return 1;
         else if(this.y < other.y) return -1;
         else if(this.y > other.y) return 1;

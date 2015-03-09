@@ -46,7 +46,8 @@ public class LineSweep {
 			Line cline = current.getLine();
 			Line clineUpper = sweepStatus.higher(cline);
 			Line clineLower = sweepStatus.lower(cline);
-			sweepStatus.remove(cline);
+			while(sweepStatus.remove(cline));
+			System.out.println(sweepStatus.size());
 			if(clineUpper != null) {
 				Point intersect = clineUpper.intersect(clineLower);
 				if(intersect != null) eventQueue.add(intersect);
@@ -55,7 +56,7 @@ public class LineSweep {
 			// It's an intersection event.
 			intersects.add(current);
 			for(Line line : current.getLines()) {
-				sweepStatus.remove(line);	// Note, this only works
+				while(sweepStatus.remove(line));	// Note, this only works
 				sweepStatus.add(line);		// to swap the lines because
 			}								// my line comparator will
 											// look ahead if they're 
@@ -116,13 +117,13 @@ public class LineSweep {
 	R.drawLine(250, 0, 250, 499, T);
         for(Line line : lines) {
             System.out.println(line);
-            R.drawLine((250 + 15*line.p.x), (250 + 15*line.p.y), (250 + 15*line.q.x), (250 + 15*line.q.y), T );
+            R.drawLine((250 + line.p.x), (250 + line.p.y), (250 + line.q.x), (250 + line.q.y), T );
         }
 
 	System.out.println("\nNumber of intersections: " + intersects.size());
 	for(Point point : intersects) {
 	    System.out.println(point);
-		R.drawPoint((250 + 15*point.x), (250 + 15*point.y), T);
+		R.drawPoint((250 + point.x), (250 + point.y), T);
 	}
 	
 	LineScanner.write(intersects, "intersections");	
